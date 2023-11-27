@@ -46,6 +46,43 @@ cars_recall2.csv
 ```
 result.csv
 ```
+# 2.2 데이터 전처리
+## 2.2.1 CSV 파일 불러오기 및 열이름 설정
+[소스 코드]
+```
+import pandas as pd
+
+df1 = pd.read_csv("/content/cars_recall1.csv", encoding="euc-kr")
+df2 = pd.read_csv("/content/cars_recall2.csv", encoding="euc-kr")
+
+#  데이터프레임의 정보 출력
+print(df1.info())
+print("\n")
+print(df2.info())
+
+# 각 데이터프레임의 열 명 지정
+column_names = ["제작사", "차명", "생산기간(부터)", "생산기간(까지)", "리콜개시일", "리콜사유"]
+column_names2 = ["접수일자", "제작사", "차명", "모델년도"]
+df1.columns = column_names
+df2.columns = column_names2
+
+# 변경 결과 출력
+print(df1)
+print("\n")
+print(df2)
+```
+[출력 결과]
+<div align="center">
+
+  |                          데이터셋1                           |
+  | :-------------------------------------------------------: |
+  | <img width="600" height="350" src="./df 사진/cars_recall1.PNG"/> |
+  
+  |                          데이터셋2                           |
+  | :-------------------------------------------------------: |
+  | <img width="700" height="350" src="./df 사진/cars_recall2.PNG"/> |
+
+  </div>
 
 데이터 전처리, 가공의 과정을 거친 두 데이터셋들을 연결한 결과 데이터셋입니다.
 이 csv 파일을 바탕으로 시각화를 진행하였습니다.
