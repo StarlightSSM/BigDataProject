@@ -27,7 +27,7 @@ cars_recall1.csv
 
   |                          데이터셋1                           |                          데이터셋2                           |
   | :-------------------------------------------------------: | :-------------------------------------------------------: |
-  | <img width="150" height="150" src="./df 사진/cars_recall1.PNG"/> | <img width="150" height="150" src="./df 사진/cars_recall2.PNG"/> |
+  | <img width="300" height="200" src="./df 사진/cars_recall1.PNG"/> | <img width="300" height="200" src="./df 사진/cars_recall2.PNG"/> |
 
   </div>
 
