@@ -99,13 +99,16 @@ df1.drop(['리콜사유', '생산기간(부터)'], axis=1, inplace=True)
 print(df1)
 print(df2)
 ```
+
 - 열 이름 변경을 위해 rename()으로 변경하고, 해당 내용들의 형식을 년도만 추출하여 변경하였습니다.
+
 ```
 #df1에서 생산기간(까지)를 모델년도로 설정하고, 년도만 추출하여 변경사항 적용
 df1.rename(columns={'생산기간(까지)':'모델년도'}, inplace=True)
 df1['모델년도'] = df1['모델년도'].str.extract(r'(\d{4})')
 print(df1)
 ```
+
 [출력 결과]
 <div align="center">
 
@@ -126,6 +129,7 @@ df2.rename(columns={'접수일자':'리콜개시일'}, inplace=True)
 print(df1)
 print(df2)
 ```
+
 [출력 결과]
 <div align="center">
   
@@ -137,6 +141,7 @@ print(df2)
 
 ## 2.2.3 데이터 가공 - 특정 열의 위치 바꾸기
 - 데이터셋1의 순서와 같게 만들기 위해, 데이터셋2번의 ”리콜개시일“이라는 열의 위치를 맨 끝으로 바꾸었습니다.
+  
 [소스 코드]
 ```
 column_to_move = '리콜개시일'
@@ -149,6 +154,7 @@ new_column_order.append(column_to_move) # 위치를 바꾸고 싶은 열을 맨 
 df2 = df2[new_column_order]
 print(df2)
 ```
+
 [출력 결과]
 <div align="center">
 
@@ -163,12 +169,14 @@ print(df2)
 - 하지만 열 하나가 데이터 타입이 다르다는 것을 확인하였고, 이에 대한 추가 작업이 필요해 보입니다.
 <div align="center">
   
-  | <img width="800" height="300" src="./깃허브 사진/7.PNG"/> |
+  <img width="800" height="300" src="./깃허브 사진/7.PNG"/> 
 
   </div>
+  
 - 많은 데이터양으로 유의미한 결과를 내기 위해 concat()과 합집합 옵션으로 두 데이터프레임을 연결하였습니다.
 - 또, 다시 순서를 날짜 순으로 정렬하기 위해, 기준을 ”리콜개시일“로 설정하여 오름차순으로 정렬하였습니다.
 - 해당 결과를 df3라는 새로운 데이터프레임에 저장하였습니다.
+
 [소스 코드]
 ```
 df3 = pd.concat([df1, df2], join='outer')
@@ -181,6 +189,7 @@ df3 = df3.sort_values(by='리콜개시일')
 df3 = df3.reset_index(drop=True)
 print(df3)
 ```
+
 [출력 결과]
 <div align="center">
 
@@ -192,6 +201,7 @@ print(df3)
 
 # 2.3 시각화를 위한 데이터 분류
 ## 2.3.1 결측치, NaN 값 확인 및 제거하기
+
 [소스 코드]
 ```
 df3.isna().sum(axis=0)							
@@ -201,6 +211,7 @@ print(df3)
 df3.to_csv("/content/result.csv", encoding="euc-kr")
 df3.isna().sum(axis=0)
 ```
+
 [출력 결과]
 <div align="center">
 
@@ -213,6 +224,7 @@ df3.isna().sum(axis=0)
   | <img width="800" height="300" src="./깃허브 사진/10.PNG"/> |
 
   </div>
+  
 - 연결되어 만들어진 데이터프레임에서 결측치나 NaN 값이 있다면 제거하거나 다른 대체 값으로 처리합니다.
 
 데이터 전처리, 가공의 과정을 거친 두 데이터셋들을 연결한 결과 데이터셋입니다. 이 csv 파일을 바탕으로 시각화를 진행하였습니다.
