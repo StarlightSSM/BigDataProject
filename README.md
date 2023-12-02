@@ -306,7 +306,8 @@ print(df3)
   | <img width="500" height="250" src="./깃허브 사진/12.PNG"/> |
 
   </div>
-  
+
+# 3 시각화
 # 계절별, 월별, 제작사별, 차량모델별로 시각화 진행
 시각화에 사용한 라이브러리
 ```
@@ -314,6 +315,45 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 ```
+
+## 3.1 [계절별] - 그룹화하기 및 리콜 횟수가 많은 순서대로 정렬하기
+
+[소스 코드]
+```
+# 계절별로 구분하기
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# csv 불러오기
+df3 = pd.read_csv("/content/result.csv", encoding="euc-kr")
+
+grouped_Season = df3.groupby(['계절'])
+grouped_Season.count().sort_values(by='리콜개시일', ascending=False)
+
+# Reset the index to make '계절' a regular column, not the index
+grouped_Season = grouped_Season.count().reset_index()
+grouped_Season.rename(columns={"계절": 'Seasons', "리콜개시일": 'recall_count'}, inplace=True)
+
+# Define the order in which you want the seasons to appear
+season_order = ['Spring', 'Summer', 'Autumn', 'Winter']
+
+# Create a bar chart with the specified season order
+plt.figure(figsize=(8, 5))
+sns.set(style="darkgrid")
+ax = sns.barplot(x="Seasons", y="recall_count", data=grouped_Season, 
+order=season_order, palette="Set2")
+plt.show()
+```
+
+[출력 결과]
+<div align="center">
+
+  |                          결과1                          |
+  | :-------------------------------------------------------: |
+  | <img width="500" height="250" src="./깃허브 사진/12.PNG"/> |
+
+  </div>
 
 # 4. 결론
 ## 4.1 집계 결과
