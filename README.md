@@ -351,9 +351,143 @@ plt.show()
 
   |                          결과1                          |
   | :-------------------------------------------------------: |
-  | <img width="500" height="250" src="./사진/111.PNG"/> |
+  | <img width="500" height="250" src="./사진/111.png"/> |
 
   </div>
+
+## 3.2 [월별] - 그룹화하기 및 리콜 횟수가 많은 순서대로 정렬하기
+
+[소스 코드]
+```
+# 월별로 구분하기
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# csv 불러오기
+df3 = pd.read_csv("/content/result.csv", encoding="euc-kr")
+grouped_monthly = df3.groupby(['월별'])
+grouped_monthly.count()["리콜개시일"].sort_values(ascending=False)
+
+# Reset the index to make '계절' a regular column, not the index
+grouped_monthly = grouped_monthly.count().reset_index()
+grouped_monthly.rename(columns={"월별": 'months', "리콜개시일": 'recall_count'}, inplace=True)
+
+# Define the order in which you want the seasons to appear
+month_order = ['Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+# Create a bar chart with the specified season order
+plt.figure(figsize=(10, 5))
+sns.set(style="darkgrid")
+sns.barplot(x="months", y="recall_count", data=grouped_monthly, order=month_order, palette="Set2")
+plt.show()
+```
+
+[출력 결과]
+<div align="center">
+
+  |                          결과1                          |
+  | :-------------------------------------------------------: |
+  | <img width="500" height="250" src="./사진/112.png"/> |
+
+  </div>
+
+## 3.3 [제작사별] - 그룹화하기 및 리콜 횟수가 많은 순서대로 정렬하기
+
+[소스 코드]
+```
+# 제작사별로 구분하기
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# 그래프 그리기
+df3 = pd.read_csv("/content/result.csv", encoding="euc-kr")
+grouped_manufacturer = df3.groupby(['제작사'])
+grouped_manufacturer.count()["차명"].sort_values(ascending=False)
+pd.DataFrame(grouped_manufacturer.count()["차명"].sort_values(ascending=False)).rename(columns={"차명":"리콜횟수"})
+grouped_manufacturer = grouped_manufacturer.count().reset_index()
+grouped_manufacturer.rename(columns={"제작사": 'manufacturer', "리콜개시일": 'recall_count'}, inplace=True)
+top_manufacturers = grouped_manufacturer.sort_values(by='recall_count', ascending=False).head(20)
+
+# 시각화
+plt.figure(figsize=(25, 15))
+sns.set(style="darkgrid")
+sns.set_palette("Set2")
+ax = sns.barplot(x="manufacturer", y="recall_count", data=top_manufacturers)
+
+# Matplotlib 함수로 한글 폰트 설정 및 xticks 조정
+plt.xticks(rotation=45, fontname='NanumBarunGothic')
+plt.xlabel('제작사', fontname='NanumBarunGothic')
+plt.ylabel('리콜횟수', fontname='NanumBarunGothic')
+plt.title('상위 20 제작사별 리콜횟수', fontname='NanumBarunGothic')
+plt.show()
+```
+
+[출력 결과]
+<div align="center">
+
+  |                          결과1(상위 10개)                          |
+  | :-------------------------------------------------------: |
+  | <img width="500" height="250" src="./사진/11-2.png"/> |
+
+  |                          결과2                          |
+  | :-------------------------------------------------------: |
+  | <img width="800" height="260" src="./사진/1131.png"/> |
+
+  |                          결과3(상위 20개)                          |
+  | :-------------------------------------------------------: |
+  | <img width="800" height="260" src="./사진/113.png"/> |
+  
+</div>
+
+## 3.4 [모델별] - 그룹화하기 및 리콜 횟수가 많은 순서대로 정렬하기
+
+[소스 코드]
+```
+# 모델별로 구분하기
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# 그래프 그리기
+df3 = pd.read_csv("/content/result.csv", encoding="euc-kr")
+grouped_models = df3.groupby(['차명'])
+grouped_models.count()["리콜개시일"].sort_values(ascending=False)
+grouped_models = grouped_models.count().reset_index()
+grouped_models.rename(columns={"차명": 'models', "리콜개시일": 'recall_count'}, inplace=True)
+top_models = grouped_models.sort_values(by='recall_count', ascending=False).head(20)
+
+# 시각화
+plt.figure(figsize=(25, 15))
+sns.set(style="darkgrid")
+sns.set_palette("Set2")
+ax = sns.barplot(x="models", y="recall_count", data=top_models)
+
+# Matplotlib 함수로 한글 폰트 설정 및 xticks 조정
+plt.xticks(rotation=45, fontname='NanumBarunGothic')
+plt.xlabel('모델명', fontname='NanumBarunGothic')
+plt.ylabel('리콜횟수', fontname='NanumBarunGothic')
+plt.title('상위 20 모델별 리콜횟수', fontname='NanumBarunGothic')
+plt.show()
+```
+
+[출력 결과]
+<div align="center">
+
+  |                          결과1(상위 10개)                          |
+  | :-------------------------------------------------------: |
+  | <img width="500" height="250" src="./사진/13-2.png"/> |
+
+  |                          결과2                          |
+  | :-------------------------------------------------------: |
+  | <img width="800" height="260" src="./사진/1142.png"/> |
+
+  |                          결과3(상위 20개)                          |
+  | :-------------------------------------------------------: |
+  | <img width="800" height="260" src="./사진/114.png"/> |
+  
+</div>
 
 # 4. 결론
 ## 4.1 집계 결과
