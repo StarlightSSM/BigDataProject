@@ -363,7 +363,7 @@ season_order = ['Spring', 'Summer', 'Autumn', 'Winter']
 plt.figure(figsize=(8, 5))
 sns.set(style="darkgrid")
 ax = sns.barplot(x="Seasons", y="recall_count", data=grouped_Season, 
-order=season_order, palette="Set2")
+order=season_order)
 plt.show()
 ```
 
@@ -401,7 +401,7 @@ month_order = ['Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'Aug', 'Sep'
 # Create a bar chart with the specified season order
 plt.figure(figsize=(10, 5))
 sns.set(style="darkgrid")
-sns.barplot(x="months", y="recall_count", data=grouped_monthly, order=month_order, palette="Set2")
+sns.barplot(x="months", y="recall_count", data=grouped_monthly, order=month_order)
 plt.show()
 ```
 
